@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+  consul:
+    command: -server -bootstrap
+    image: progrium/consul:latest
+    ports:
+      - "8500:8500"
+    networks:
+      app_net:
+        ipv4_address: 172.16.239.16
+
+  dev:
+    build: Image/
+    links:
+      - consul
+    tty: true
+    dns: 127.0.0.1
+    volumes:
+      - .:/opt/source/
+    networks:
+      app_net:
+        ipv4_address: 172.16.239.17
+
+networks:
+  app_net:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "true"
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.16.239.0/24
+        gateway: 172.16.239.1
+      - subnet: 2001:3984:3989::/64
+        gateway: 2001:3984:3989::1

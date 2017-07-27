@@ -1,0 +1,9 @@
+{
+  "data_dir": "/data",
+  "leave_on_terminate": true,
+  "retry_join": ["consul"],
+  "ports":{
+     "dns":53
+  },
+  "recursors":["8.8.8.8","8.8.4.4"]
+}
